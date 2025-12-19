@@ -1,71 +1,103 @@
 # 🐦 Emotional Manipulation Detection in Tweets
-
-This project aims to detect **emotional manipulation in short texts (tweets)** using **BERTweet** and a **multi-task learning** approach. The model predicts both the **emotion** and **manipulation/bias** of a text in a single forward pass, making it suitable for real-world social media analysis.
-
----
-
-## 🧪 Methodology
-
-### 📊 Datasets
-Three datasets were used to capture different aspects of short-text analysis:
-
-- **Emotion Dataset 😢😊❤️😡😱😮** – Multiclass (6 emotions)  
-- **Manipulation/Propaganda Dataset ⚖️** – Binary classification (manipulative vs non-manipulative)  
-- **Bias Dataset ⚖️** – Binary classification (biased vs non-biased)  
-
-**Preprocessing steps included:**  
-1. **Text Cleaning:** Removal of URLs, mentions, emojis, and special characters  
-2. **Label Standardization:** Consistent representation of class labels across datasets  
-3. **Deduplication:** Removing repeated entries to avoid bias  
-4. **Class Balancing:** Mitigating data skew for underrepresented classes  
-5. **Data Splitting:** Dividing data into training, validation, and test sets  
-
-Cleaned datasets were stored as `emotion_clean.csv`, `propaganda_clean.csv`, and `bias_clean.csv`.
+**Multi-task BERTweet Model with Streamlit Interface**
 
 ---
 
-### 🧠 Model Architecture
+## 📌 Project Overview
+This project presents an **end-to-end NLP system** for detecting **emotional manipulation in short texts (tweets)**.  
+A **multi-task deep learning model** based on **BERTweet** jointly predicts:
 
-A **multi-task learning model** was built using **vinai/bertweet-base** as the backbone, with two classification heads:
+- **Dominant emotion** (6 classes)
+- **Manipulation / propaganda / bias** (binary)
 
-- **Emotion Head :** 6 classes – Sadness, Joy, Love, Anger, Fear, Surprise  
-- **Manipulation/Bias Head :** Binary classification – 0: non-manipulative/non-biased, 1: manipulative/biased  
-
-**Key advantages of this architecture:**  
-- Simultaneous prediction of emotion and manipulation in one forward pass  
-- Leverages shared representations to improve generalization  
-- Captures subtle emotional cues and manipulative patterns in tweets  
+The system is deployed through an **interactive Streamlit application** and supports full evaluation on test datasets.
 
 ---
 
-### ⚙️ Training Details
+## 📊 Datasets & Preprocessing
+Three datasets were used:
 
-- **Loss Function:** Combined loss – `loss_total = loss_emotion + loss_manipulation`  
-- **Optimizer:** Adam  
-- **Loss Type:** Cross-entropy with softmax for both heads  
-- **Class Weights:** Applied to handle imbalanced emotion classes  
-- **Epochs:** Trained until convergence (~10–15 epochs)  
-- **Batch Size:** 32  
-- **Learning Rate:** 2e-5  
+| Dataset | Task Type | Classes |
+|------|----------|--------|
+| Emotion | Multiclass | Sadness, Joy, Love, Anger, Fear, Surprise |
+| Propaganda | Binary | Manipulative / Non-manipulative |
+| Bias | Binary | Biased / Non-biased |
+
+### Preprocessing Steps
+- Text cleaning (URLs, emojis, mentions, special characters)
+- Label standardization
+- Deduplication
+- Partial class balancing
+- Train / validation / test split
+
+Cleaned datasets:
+data_clean/
+├── emotion_clean.csv
+├── propaganda_clean.csv
+├── bias_clean.csv
+
+
+---
+
+## 🧠 Model Architecture
+- **Backbone**: `vinai/bertweet-base`
+- Pretrained on tweets and short social media texts
+- Two task-specific classification heads:
+  - **Emotion Head** → 6 classes
+  - **Manipulation/Bias Head** → Binary
+
+✔️ Both predictions are produced in a **single forward pass**.
+
+---
+
+## ⚙️ Training Details
+- Optimizer: Adam
+- Learning rate: `2e-5`
+- Batch size: `32`
+- Epochs: ~10–15
+- Loss function:
+loss_total = loss_emotion + loss_manipulation
+
+- Cross-entropy loss with class weighting for emotion imbalance
 
 ---
 
 ## 📈 Results
+| Task | Accuracy | Notes |
+|----|--------|------|
+| Emotion | ~96% | Strong performance across all classes |
+| Manipulation / Bias | ~86% | Effective detection of manipulative patterns |
 
-| Task | Accuracy | Macro-F1 | Notes |
-|------|----------|----------|-------|
-| Emotion  | 96% | High | Strong performance across all emotion classes |
-| Manipulation/Bias  | 86% | Moderate/High | Successfully detects most manipulative or biased cases |
-
-**Insights:**  
-- Confusion matrices show that misclassifications mostly occur in **ambiguous or overlapping cases**.  
-- The multi-task framework effectively captures both emotional and manipulative cues.  
+Misclassifications mainly occur in ambiguous or overlapping cases.
 
 ---
 
-## 🚀 Deployment
+## 🖥 Streamlit Application
+The Streamlit app provides:
 
-The model is deployed via **Streamlit** for interactive testing and **Docker** for reproducibility:
+- 📊 Dataset exploration & visualization
+- 🔮 Real-time text prediction
+- 📏 Model evaluation on test datasets
+- ℹ️ Model & training overview
 
-- **Streamlit:** Run locally with `streamlit run app.py`  
-- **Docker:** Build and run the container using the provided `Dockerfile`  
+Run locally:
+streamlit run app.py
+
+---
+
+## 🐳 Docker Support
+The project includes Docker support for reproducibility.
+docker build -t emotional-manipulation-app .
+docker run -p 8501:8501 emotional-manipulation-app
+
+
+---
+
+## 🎯 Key Contributions
+- Multi-task NLP model for emotion & manipulation detection
+- BERTweet-based architecture optimized for short texts
+- Hybrid decision logic improving interpretability
+- Full pipeline from data to deployment
+
+> *This project demonstrates how deep learning and linguistic reasoning can be combined to analyze emotional manipulation in social media content.*
+

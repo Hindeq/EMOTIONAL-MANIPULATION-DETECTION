@@ -28,8 +28,8 @@ Cleaned datasets were stored as `emotion_clean.csv`, `propaganda_clean.csv`, and
 
 A **multi-task learning model** was built using **vinai/bertweet-base** as the backbone, with two classification heads:
 
-- **Emotion Head 😢😊❤️😡😱😮:** 6 classes – Sadness, Joy, Love, Anger, Fear, Surprise  
-- **Manipulation/Bias Head ⚖️:** Binary classification – 0: non-manipulative/non-biased, 1: manipulative/biased  
+- **Emotion Head :** 6 classes – Sadness, Joy, Love, Anger, Fear, Surprise  
+- **Manipulation/Bias Head :** Binary classification – 0: non-manipulative/non-biased, 1: manipulative/biased  
 
 **Key advantages of this architecture:**  
 - Simultaneous prediction of emotion and manipulation in one forward pass  
@@ -54,8 +54,8 @@ A **multi-task learning model** was built using **vinai/bertweet-base** as the b
 
 | Task | Accuracy | Macro-F1 | Notes |
 |------|----------|----------|-------|
-| Emotion 😢😊❤️😡😱😮 | 96% | High | Strong performance across all emotion classes |
-| Manipulation/Bias ⚖️ | 86% | Moderate/High | Successfully detects most manipulative or biased cases |
+| Emotion  | 96% | High | Strong performance across all emotion classes |
+| Manipulation/Bias  | 86% | Moderate/High | Successfully detects most manipulative or biased cases |
 
 **Insights:**  
 - Confusion matrices show that misclassifications mostly occur in **ambiguous or overlapping cases**.  

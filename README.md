@@ -32,8 +32,11 @@ Three datasets were used:
 
 Cleaned datasets:
 data_clean/
+
 ├── emotion_clean.csv
+
 ├── propaganda_clean.csv
+
 ├── bias_clean.csv
 
 
